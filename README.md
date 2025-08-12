@@ -1,4 +1,4 @@
-# chatWebApp
+# Simple Web Chat (SWC)
 
 IDEAS
  - using firebase for the entire thing
@@ -16,3 +16,4 @@ CHATS
  - Users can create new chats in a dialog by adding one or more email adresses. 
 
  UI
+ - see google slide
