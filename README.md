@@ -4,7 +4,8 @@ IDEAS
  - using firebase for the entire thing
 
 USERS
- - users enter their email adress and are sent an email containing a code. The code is never stored in the server, rather a hashed version of the code is stored
+ - users enter their email adress and are sent an email containing a 5 letter code. The code is never stored in the server, rather a hashed version of the code is stored
+  - The code comes with an pneumonic to remember (adj noun adverb verb noun) (aging monkeys quickly devour hands)
  - when users log in, they must enter their email and their code. Before being sent to the server, the code is hashed and the two hashed codes are checked to verify the user
  - user names, emails, and hashed codes are all stored inside a firebase database. 
  - the email and code are stored locally for the entire session and checked to be correct for every message sent and every action done. 

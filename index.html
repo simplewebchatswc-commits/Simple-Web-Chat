@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Simple Web Chat (SWC)</title>
+</head>
+<body style="margin:0;">
+
+<div style ="height: 100vh; display: flex; flex-direction: column;">
+
+    <h1>Simple Web Chat (SWC) </h1>
+    
+    
+    <table style="flex: 1; width: 100%; height: 98%; border-collapse: collapse; border: none; table-layout: fixed; box-sizing: border-box; font-size: 18px; overflow: auto;">
+
+        <tr style=" vertical-align: top; height: 98%;">
+            <td style="width: 25%; height: 98%; border-right: 2px solid black; padding: 5px;">
+                <div id = "logged-out"> 
+                    <button id = "login">Login</button> 
+                    <button id = "signUp">Sign Up</button>
+                    <br>
+                    <b>IMPORTANT! READ!</b>
+                    <b><br>How logging in works:</b>
+                    <p style="margin : 0; padding-top:0;"> If you have not created an account, enter your email adress and name. <br><br> You will be emailed your own permanent passcode. DO NOT LOSE IT. It is your passcode FOREVER. <br> You can read about why your passcode is chosen for you in the technical info link below.  <br>---<br> If you have an account, log in using your email and provided passcode. </p>
+                </div>
+                
+                <div id = "logged-in">
+                    <h2 id = logged-in-as></h2>
+                    <p>Version 0.1 
+                        <br> Things to add: 
+                        <br> - ability to log in and out
+                        <br> - online support
+                        <br> - adding CHATS
+                        <br> - basically everything lol this version sucks
+                        <br> - support for different file types too
+                     </p>
+                </div>
+                
+
+                <div style=" position: absolute; bottom: 5px;">
+                    <a href="registry/registry.html">Registry of Users</a>
+                    <br>
+                    <a href="staticPages/technical.html">Technical Info</a>
+                    <br>
+                    <a href="staticPages/manual.html">SWC User Manual</a>
+                </div>
+                
+
+                
+            </td>
+            <td style="width: 25%; height: 98%; border-right: 2px solid black; padding: 5px;">
+            
+                CHATS STUFF
+
+            </td>
+            <td style="width: calc(100%-5px); height: 98%; border: none; padding: 5px; display: flex; flex-direction: column; align-items: stretch;">
+                chat input or smth idk
+
+            </td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/js-sha256@0.9.0/build/sha256.min.js"></script>
+s<script src = "scripts/main.js" type = "module"></script>
+</body>
+</html>
