@@ -23,6 +23,10 @@ const app = initializeApp(firebaseConfig);
 const userDB = getDatabase(app, "https://simple-web-chat-b7d54-default-rtdb.firebaseio.com/")
 
 //user login stuff
+let loggedIn = false
+let curUserName = null
+let curUserPass = null
+let curUserEmail = null
 
 class User {
   constructor(name, email, pass) {
@@ -42,7 +46,14 @@ class User {
 }
 
 function sanitizeKey(key) {
-  return key.replace(/[.#$\[\]]/g, '');  // remove Firebase disallowed chars
+  return key
+    .toLowerCase()
+    .replace(/\./g, '_dot_') 
+    .replace(/#/g, '_hash_')
+    .replace(/\$/g, '_dollar_')
+    .replace(/\[/g, '_open_')
+    .replace(/\]/g, '_close_')
+    .replace(/@/g, '_at_');
 }
 
 async function userExists(userEmail) {
@@ -82,12 +93,12 @@ const signUp = document.getElementById("signUp");
 signUp.addEventListener('click', addAccount)
 
 async function addAccount(){
-  let userName = prompt("Enter Name Here:")
-  let userEmail = prompt("Enter Email Here:")
+  let userName = prompt("Name (please enter your real name):", "Enter Name Here:");
+  let userEmail = prompt("Email:", "Enter Email Here:");
   //check if user exists in database
   
   if(await userExists(userEmail)){
-    alert("User email is already registered! Use 'log in' to log in!")
+    alert("User email is already registered! Use 'Log In' to log in!");
   }else{
     //generate passcode
     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -102,25 +113,50 @@ async function addAccount(){
 
 
     //send the email
-    let templateParams = {passcode: passCodeResult, email: userEmail}
+    let templateParams = {passcode: passCodeResult, email: userEmail};
     emailjs.send("service_1k01dze","template_g9vnbrg", templateParams, emailjsOptions);
 
-    alert("User has been created. Email containing passcode has been sent.")
+    alert("User has been created. Email containing passcode has been sent.");
   }
-
-  
 }
 //log in code
+const logIn = document.getElementById("logIn");
+logIn.addEventListener('click', signIn)
+
+async function signIn(){
+  let userEmail = prompt("Email:", "Enter Email Here:");
+  let userPass = prompt("Passcode:", "Enter Passcode Here:");
+
+  
+
+  if(await userExists(userEmail)){
+    const userDBRef = ref(userDB);
+    const snapshot = await get(child(userDBRef, sanitizeKey(userEmail)));
+    let userData = snapshot.val();
+
+    let hashedPass = sha256(userPass);
+    if(hashedPass == userData.hashedPass){
+      curUserName = userData.name;
+      curUserPass = userPass;
+      curUserEmail = userEmail;
+      loggedIn = true;
+      alert("Logged in!");
+      refreshLoginView()
+    }else{
+      alert("Incorrect passcode.");
+    }
+  }else{
+    alert("User is already registered! Use 'Sign Up' to sign up!")
+  }
+}
 
 
 
 function refreshLoginView(){
-    const loggedIn = false
     document.getElementById('logged-in').style.display = loggedIn ? 'block' : 'none';
     document.getElementById('logged-out').style.display = loggedIn ? 'none' : 'block';
     if(loggedIn){
-        placeholdername = "ijabhroiuf"
-        document.getElementById('logged-in-as').textContent = "Logged in as " + placeholdername + "!"
+        document.getElementById('logged-in-as').textContent = "Logged in as " + curUserName + "!"
     }
 }
 refreshLoginView()
