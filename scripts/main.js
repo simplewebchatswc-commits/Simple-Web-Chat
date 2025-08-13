@@ -287,7 +287,7 @@ async function updateTextArea(){
     chatHeader.textContent = curUserChatName;
   }
 }
-setInterval(updateTextArea, 500);
+setInterval(updateTextArea, 1000);
 
 
 let sendMessage = document.getElementById("sendMessage");
@@ -304,7 +304,7 @@ async function addMessage(){
   if(msgInput.value != "" && curUserChat != null){
     let curList = msgSnapshot.child(curUserChat).val();
     if(curList.members.includes(curUserEmail)){return;};
-    
+
     const messageRef = child(msgDB,  curUserChat+"/messages")
     const newMessageRef = push(messageRef);
     await set(newMessageRef, new Message("text", msgInput.value, curUserName));
@@ -343,6 +343,6 @@ async function pruneOldMessages() {
   }
 
 }
-setInterval(pruneOldMessages, 5000);
+setInterval(pruneOldMessages, 10000);
 
 //add security
