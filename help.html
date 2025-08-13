@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SWC Registry</title>
+</head>
+<body style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif">
+
+  <h1>Help and Info</h1>
+  <b>Help! Something isn't working!</b>
+  <p>95% of this project was written in like a single afternoon and like a quarter of the code is from stack overflow. My past self seems to have left zero comments in the code for my current self. I genuinely could not tell you how a lot of the code works, but so far, it seems like it does work. So I'm not gonna mess with it. </p>
+  <p>If you find a bug, which is quite likley tbh, it could be 1 of 2 things. </p>
+  <ul>
+    <li>Slow network connection/server (This is hosted on a free server that gets overworked and slow quite easily)</li>
+    <li>Something actually broken in the code</li>
+  </ul>
+  <p>For example, if, when you click the chats dropdown, it doesn't load all the chats you are in, or selecting a chat momentarily doesn't work, that seems to be caused by a bad internet connection or too many clients connecting to the server.</p>
+  <p>The same is true if you can't log in or sign up easily. If you put in email and passcode and nothing happens, no confirmation you logged in, this is also probably the server.</p>
+  <p>That being said, if these issues are persistent, or if you have other issues/bugs, please contact me with a detailed report of what exactly went wrong. <br>You can email me at: simplewebchat.swc@gmail.com</p>
+
+  <b>Technical Information</b>
+  <p>All of the backend data for this project is stored on a firebase realtime database. I did this because 1. it's free and 2. it's quite a bit easier to use than creating my own backend from scratch. All of the data, besides passcodes, is stored unencrypted on this database. There are read and write permission systems in place, but the security is honestly not that good.</p>
+  <p>It is for this reason that I didn't want users to enter their own passcodes. Everyone would probably use the same passcode they use for every other account they own, and if I mess up and these passcodes are somehow aquired by a malicious third party, it would be bad. </p>
+  <p>There is no reason any passcodes should be leaked because they are hashed before they even make it to the server. BUT. The messages are not encrypted, and the read/write permissions are not watertight. There is probably some exploit I didn't think of that would allow people to read messages in chats they aren't a part of. So please, for the love of all good things, do not share your deepest darkest secrets over this platform. Assume it could be read by someone else.</p>
+
+    <div style=" position: absolute; top: 5px; right: 5px;">
+        <a href="/index.html">Return to Main Page</a>
+        <br>
+    </div>
+
+    <script src = "registry.js" type = "module"></script>
+</body>
+</html>

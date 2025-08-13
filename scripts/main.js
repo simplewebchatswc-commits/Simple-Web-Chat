@@ -195,7 +195,7 @@ class Chat{
 }
 
 const selectChat = document.getElementById("selectChat");
-selectChat.addEventListener('click', updateSelectDropdown);
+selectChat.addEventListener('focus', updateSelectDropdown);
 
 async function updateSelectDropdown(){
   while (selectChat.options.length > 1) {
@@ -211,18 +211,19 @@ async function updateSelectDropdown(){
       key: childSnap.key, 
       data: childSnap.val()
     })
-    for(let i = 0; i < chats.length; i++){
-      let members = chats[i].data.members;
-      if (members.includes(curUserEmail)){
-        let names = []
-        for(let j = 0; j < members.length; j++){
-          names.push(allUsers[sanitizeKey(members[j])]["name"]);
-        }
-        
-        selectChat.add(new Option(names.join(", "), chats[i].key));
-      }
-    }
   })
+  for(let i = 0; i < chats.length; i++){
+    let members = chats[i].data.members;
+    if (members.includes(curUserEmail)){
+      let names = []
+      for(let j = 0; j < members.length; j++){
+        names.push(allUsers[sanitizeKey(members[j])]["name"]);
+      }
+      
+      selectChat.add(new Option(names.join(", "), chats[i].key)); 
+      console.log(names)
+    }
+  }
 }
 selectChat.addEventListener("change", () => {
   curUserChat = selectChat.value; 
@@ -262,6 +263,7 @@ async function createChat(){
 
   let newChat = new Chat(emailList, 10) //1 week or 200 messages
   await set(child(msgDB, chatKey), newChat);
+  listInput.value = curUserEmail
   alert("Chat has been created!")
 }
 
@@ -276,6 +278,7 @@ async function updateTextArea(){
     let outputString = ""
     const msgSnapshot = await get(msgDB);
     let curList = msgSnapshot.child(curUserChat).val();
+    if(curList.members.includes(curUserEmail)){return;};
     Object.values(curList.messages).forEach(msg => {
       outputString += msg.author + ": " + msg.content + "\n";
     });
@@ -299,6 +302,9 @@ msgInput.addEventListener('keydown', function(event) {
 
 async function addMessage(){
   if(msgInput.value != "" && curUserChat != null){
+    let curList = msgSnapshot.child(curUserChat).val();
+    if(curList.members.includes(curUserEmail)){return;};
+    
     const messageRef = child(msgDB,  curUserChat+"/messages")
     const newMessageRef = push(messageRef);
     await set(newMessageRef, new Message("text", msgInput.value, curUserName));
